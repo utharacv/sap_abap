@@ -1,0 +1,23 @@
+REPORT ZUTH_PROFIT.
+PARAMETERS : p_iniamt TYPE p DECIMALS 2,
+             p_pper TYPE p DECIMALS 2,
+             p_days TYPE i,
+             p_che AS CHECKBOX.
+DATA :   fin_amt TYPE p DECIMALS 2,
+         intr_amt TYPE p DECIMALS 2.
+IF p_che EQ 'X'.
+intr_amt = p_iniamt * ( p_pper / 100 ) * ( p_days ) .
+      fin_amt = p_iniamt + intr_amt.
+    ELSE.
+      fin_amt = p_iniamt.
+     DO p_days TIMES.
+    intr_amt = fin_amt * p_pper / 100.
+
+
+
+    fin_amt = fin_amt + intr_amt.
+    ENDDO.
+      ENDIF.
+      WRITE :'INITIAL AMT:',p_iniamt,
+  /'TOTAL DAYS:',P_DAYS,
+  /'TOTAL AMOUNT:',FIN_AMT.

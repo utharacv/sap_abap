@@ -1,0 +1,77 @@
+REPORT ZUTHARA_SALESDOCUMENT.
+TYPES :BEGIN OF ty_vbak,
+       vbeln TYPE vbak-vbeln,
+       audat TYPE vbak-audat,
+       netwr TYPE vbak-netwr,
+      kunnr TYPE vbak-kunnr,
+END OF ty_vbak.
+
+
+
+TYPES :BEGIN OF ty_vbap,
+       posnr TYPE vbap-posnr,
+       matnr TYPE vbap-matnr,
+       arktx TYPE vbap-arktx,
+       kwmeng TYPE vbap-kwmeng,
+       zieme TYPE vbap-zieme,
+       netwr TYPE vbap-netwr,
+
+
+
+END OF ty_vbap.
+
+
+
+
+
+DATA  :  st_vbap TYPE ty_vbap.
+DATA : st_vbak TYPE ty_vbak.
+DATA : name TYPE kna1-name1.
+DATA : uom TYPE t006a-mseht.
+
+
+
+PARAMETERS : p_dnum TYPE vbak-vbeln.
+
+
+
+SELECT SINGLE vbeln audat netwr kunnr FROM vbak INTO st_vbak WHERE vbeln eq p_dnum.
+  SELECT SINGLE name1 from kna1 into name WHERE kunnr eq st_vbak-kunnr.
+
+
+
+
+
+WRITE:/ 'Document Number:' , st_vbak-vbeln,
+       / 'Document Date:', st_vbak-audat,
+       / 'Net Value:', st_vbak-netwr,
+       / 'Sold to property:', name.
+
+
+
+  WRITE : /'Item',
+            20 'Material',
+            35 'Item Description',
+            60 'Order Qty',
+            80 'UoM',
+            100 'Net Value'.
+
+
+
+select posnr matnr arktx kwmeng zieme netwr FROM vbap INTO st_vbap WHERE vbeln EQ p_dnum.
+  SELECT SINGLE mseht FROM T006a INTO uom  WHERE msehi eq st_vbap-zieme.
+
+
+
+  WRITE : / st_vbap-posnr,
+            20 st_vbap-matnr,
+            35 st_vbap-arktx,
+            50  st_vbap-kwmeng,
+            80  uom,
+            90  st_vbap-netwr.
+
+
+
+
+
+  ENDSELECT.

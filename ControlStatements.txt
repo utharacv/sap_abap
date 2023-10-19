@@ -1,0 +1,84 @@
+REPORT Z_UTH_CONTROL.
+*TYPES :BEGIN OF ty_makt,
+*        matnr TYPE makt-matnr,
+*        spras TYPE makt-spras,
+*        maktx TYPE makt-maktx,
+*        maktg TYPE makt-maktg,
+*  END OF ty_makt.
+*
+*  DATA : it_makt TYPE TABLE OF ty_makt,
+*        wa_makt LIke LINE OF it_makt.
+*
+*  wa_makt-matnr = '100'.
+*  wa_makt-spras = 'E'.
+*  wa_makt-maktx = 'Akhila'.
+*  APPEND wa_makt to it_makt.
+*
+*   wa_makt-matnr = '200'.
+*  wa_makt-spras = 'F'.
+*  wa_makt-maktx = 'Akhil'.
+*  APPEND wa_makt to it_makt.
+*
+*   wa_makt-matnr = '300'.
+*  wa_makt-spras = 'D'.
+*  wa_makt-maktx = 'Ahila'.
+*  APPEND wa_makt to it_makt.
+*
+*READ TABLE it_makt INTO wa_makt WITH KEY maktx = 'Ahila'.
+* WRITE wa_makt.
+
+
+TYPES : BEGIN OF ty_makt,
+    matnr TYPE makt-matnr,
+    spras TYPE makt-spras,
+  maktx TYPE makt-maktx,
+  maktg TYPE makt-maktg,
+  END OF ty_makt.
+*
+*  data : it_makt TYPE SORTED TABLE OF ty_makt with UNIQUE key matnr,
+*        wa_makt LIKE LINE OF it_makt.
+*
+*  wa_makt-matnr = '400'.
+*  wa_makt-spras = 'E'.
+*  wa_makt-maktx = 'Akhila'.
+*  insert wa_makt into table it_makt.
+*
+*   wa_makt-matnr = '200'.
+*  wa_makt-spras = 'F'.
+*  wa_makt-maktx = 'Akhil'.
+*  insert wa_makt into table it_makt.
+*
+*   wa_makt-matnr = '300'.
+*  wa_makt-spras = 'D'.
+*  wa_makt-maktx = 'Ahila'.
+*  insert wa_makt into table it_makt.
+*
+*  READ TABLE it_makt INTO wa_makt with key matnr = '100'  BINARY SEARCH.
+*  loop at it_makt into wa_makt.
+*    write : wa_makt.
+*    endloop.
+
+
+data : it_makt TYPE HASHED TABLE OF ty_makt WITH UNIQUE KEY matnr,
+      wa_makt like LINE OF it_makt.
+
+  wa_makt-matnr = '400'.
+  wa_makt-spras = 'E'.
+  wa_makt-maktx = 'Akhila'.
+  insert wa_makt into table it_makt.
+
+   wa_makt-matnr = '200'.
+  wa_makt-spras = 'F'.
+  wa_makt-maktx = 'Akhil'.
+  insert wa_makt into table it_makt.
+
+   wa_makt-matnr = '300'.
+  wa_makt-spras = 'D'.
+  wa_makt-maktx = 'Ahila'.
+  insert wa_makt into table it_makt.
+
+*  READ TABLE it_makt INTO wa_makt with key matnr = '100'  BINARY SEARCH.
+sort it_makt by matnr.
+  loop at it_makt into wa_makt.
+    write : wa_makt.
+    endloop.
