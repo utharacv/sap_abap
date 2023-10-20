@@ -1,0 +1,73 @@
+*REPORT ZUTH_MSG_PGM.
+*DATA : it_makt TYPE STANDARD TABLE OF makt,
+*       wa_makt LIKE LINE OF it_makt.
+*
+*
+*
+*PARAMETERS p_matnr TYPE makt-matnr.
+*
+*
+*
+*SELECT * FROM makt INTO TABLE it_makt WHERE matnr EQ p_matnr.
+*  if sy-subrc IS NOT INITIAL.
+*    MESSAGE e000(zuthara_message).
+*
+*
+*
+*    ENDIF.
+*
+*
+*
+*  LOOP AT it_makt INTO wa_makt.
+*    WRITE : / wa_makt-matnr, wa_makt-spras, wa_makt-maktx.
+*    ENDLOOP.
+
+
+*REPORT ZUTH_MSG_PGM MESSAGE-ID ZUTHARA_MESSAGE.
+*DATA : it_makt TYPE STANDARD TABLE OF makt,
+*       wa_makt LIKE LINE OF it_makt.
+*
+*
+*
+*PARAMETERS p_matnr TYPE makt-matnr.
+*
+*
+*
+*SELECT * FROM makt INTO TABLE it_makt WHERE matnr EQ p_matnr.
+*  if sy-subrc IS NOT INITIAL.
+**    MESSAGE e000(zuthara_message).
+*MESSAGE e000.
+*
+*
+*    ENDIF.
+*
+*
+*
+*  LOOP AT it_makt INTO wa_makt.
+*    WRITE : / wa_makt-matnr, wa_makt-spras, wa_makt-maktx.
+*    ENDLOOP.
+
+
+
+    REPORT ZUTH_MSG_PGM.
+DATA : it_makt TYPE STANDARD TABLE OF makt,
+       wa_makt LIKE LINE OF it_makt.
+
+
+
+PARAMETERS p_matnr TYPE makt-matnr.
+
+
+
+SELECT * FROM makt INTO TABLE it_makt WHERE matnr EQ p_matnr.
+  if sy-subrc IS NOT INITIAL.
+   MESSAGE 'The comment is not valid...' type 'E'.
+
+
+    ENDIF.
+
+
+
+  LOOP AT it_makt INTO wa_makt.
+    WRITE : / wa_makt-matnr, wa_makt-spras, wa_makt-maktx.
+    ENDLOOP.
