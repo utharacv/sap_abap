@@ -1,0 +1,53 @@
+REPORT ZUTHARA_DATAOBJECTS.
+*DATA v_name TYPE c LENGTH 10.
+*DATA qty1 TYPE i .
+*DATA qty2 TYPE p decimals 2 .
+*DATA qty3 TYPE f .
+*DATA date TYPE d .
+*DATA time TYPE t .
+
+DATA :
+v_name TYPE c LENGTH 10,
+qty1 TYPE i ,
+qty2 TYPE p decimals 2 ,
+qty3 TYPE f,
+date TYPE d ,
+date_out TYPE c LENGTH 10,
+time TYPE t .
+
+
+qty1 = '10.35'.
+qty2 = '26.89'.
+qty3 = '-32.6'.
+v_name = 'Uthara'.
+date = '20231010'.
+time = '12:20'.
+
+WRITE  'My name is:'. WRITE v_name.
+WRITE :/ 'Integer is:'. WRITE  qty1.
+WRITE :/ 'Decimal is:'. WRITE  qty2.
+WRITE :/ 'Float is:'. WRITE  qty3.
+WRITE :/ 'Todays date is:'. WRITE  date.
+WRITE date To date_out .
+WRITE :/ 'Formatted date:' .WRITE date_out.
+WRITE :/ 'Current Time is:'. WRITE  time.
+
+*------------------------------------------------------------
+*USER defined type
+TYPES ZV_name TYPE c LENGTH 30.
+DATA :
+      name TYPE ZV_name,
+      v_f_name TYPE ZV_name,
+      v_m_name TYPE ZV_name.
+name = 'Uthara'.
+v_f_name = 'Vijayan'.
+v_m_name = 'geetha'.
+WRITE :/ 'name is: ' ,name.
+WRITE :/ 'f-name is: ',v_f_name.
+WRITE :/ 'm-name is: ',v_m_name.
+
+
+DATA v1 TYPE zv_name1.
+v1 = 'vdhggadjfjh'.
+WRITE :/'example output:'.
+ WRITE v1.

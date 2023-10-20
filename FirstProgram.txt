@@ -1,0 +1,4 @@
+REPORT ZUTHARA_FIRST.
+PARAMETERS p_name TYPE c LENGTH 10.
+WRITE 'My Name is:'.
+WRITE p_name.
