@@ -1,0 +1,29 @@
+REPORT ZUTHARA_SELECTOPTION.
+TYPES : BEGIN OF ty_marc,
+  matnr TYPE marc-matnr,
+  werks TYPE marc-werks,
+  END OF ty_marc.
+
+TYPES :BEGIN OF ty_makt,
+  matnr TYPE makt-matnr,
+  spras TYPE makt-spras,
+  maktx TYPE makt-maktx,
+
+  END OF ty_makt.
+
+PARAMETERS p_werks TYPE ty_marc-werks.
+
+DATA : it_marc TYPE TABLE OF ty_marc,
+      wa_marc LIKE LINE OF it_marc,
+
+      it_makt type TABLE OF ty_makt,
+      wa_makt like LINE OF it_makt.
+SELECT-OPTIONS s_werks for wa_marc-werks.
+
+
+select matnr werks FROM marc into TABLE it_marc WHERE werks in s_werks.
+  SELECT matnr spras maktx FROM makt INTO TABLE it_makt FOR ALL ENTRIES IN it_marc WHERE matnr eq it_marc-matnr.
+  LOOP at it_marc into wa_marc.
+    READ TABLE  it_makt INTO wa_makt with key matnr = wa_marc-matnr spras = sy-langu.
+    WRITE :/ wa_marc-werks, wa_marc-matnr,wa_makt-maktx.
+    ENDLOOP.
