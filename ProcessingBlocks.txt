@@ -1,0 +1,105 @@
+REPORT ZUTH_PROCESSINGBLOCKS.
+*
+*DATA v_maktx type maktx.
+*
+*PARAMETERS : p_matnr TYPE matnr DEFAULT 'MN100',
+*
+*            p_date TYPE sy-datum,
+*
+*            p_set1 as CHECKBOX.
+*
+*
+*
+*START-OF-SELECTION.
+*
+*
+*
+*DATA v_name TYPE c LENGTH 10.
+*
+* select SINGLE maktx FROM makt into v_maktx WHERE matnr eq p_matnr.
+*
+*   PERFORM show_output.
+*
+*
+*
+*   AT LINE-SELECTION.
+*
+*     WRITE 'secondary list'.
+*
+*     call SELECTION-SCREEN 1000.
+*
+*   form show_output.
+*
+*
+*
+*     v_name = 'uthara'.
+*
+*     WRITE v_name.
+*
+*     ENDFORM.
+*
+*     FORM display.
+*
+*       v_name = 'uthara'.
+*
+*       ENDFORM.
+*
+*     At SELECTION-SCREEN OUTPUT.
+*
+*       p_date = sy-datum.
+*
+*       LOOP AT SCREEN.
+*
+*         if screen-name = 'P_SETL'.
+*
+*           screen-input = 0.
+*
+*           MODIFY SCREEN.
+*
+*           ENDIF.
+*
+*           ENDLOOP.
+
+
+
+parameters p_matnr type matnr.
+
+
+
+load-of-program.
+write:/ '1****load-of-program triggered'.
+
+
+
+INITIALIZATION.
+write:/ '2****INITIALIZATION'.
+
+
+
+start-of-SELECTION.
+write:/ '3***Start of selection'.
+
+
+
+end-of-selection.
+write:/ '4***end-of-selection'.
+
+
+
+at selection-screen.
+write:/ '5***at selection-screen started'.
+
+
+
+top-of-page.
+write:/ '6***top-of-page'.
+
+
+
+end-of-page.
+write:/ '7***End of page'.
+
+
+
+at line-selection.
+write:/ '8***At line selection'.

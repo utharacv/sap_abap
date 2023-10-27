@@ -1,0 +1,72 @@
+REPORT ZUTH_SUBROUTINE.
+*DATA : v_matnr type makt-matnr,
+*       v_spras type makt-spras,
+*       v_maktx type makt-maktx.
+*v_matnr = '000000000000000056'.
+*v_spras = 'E'.
+*PERFORM get_data USING v_matnr v_spras CHANGING v_maktx.
+*WRITE v_maktx.
+**&---------------------------------------------------------------------*
+**& Form get_data
+**&---------------------------------------------------------------------*
+**& text
+**&---------------------------------------------------------------------*
+**& -->  p1        text
+**& <--  p2        text
+**&---------------------------------------------------------------------*
+*FORM get_data USING p_v_matnr TYPE makt-matnr
+*                    p_v_spras TYPE makt-spras
+*             CHANGING p_v_maktx TYPE makt-maktx.
+*
+*  select single maktx from makt into p_v_maktx where matnr eq p_v_matnr and spras eq p_v_spras.
+*
+*ENDFORM.
+
+*
+*DATA : v_matnr type makt-matnr,
+*       v_spras type makt-spras,
+*       v_maktx type makt-maktx.
+*v_matnr = '000000000000000056'.
+*v_spras = 'E'.
+*PERFORM get_data USING v_matnr v_spras CHANGING v_maktx.
+*WRITE v_maktx.
+**&---------------------------------------------------------------------*
+**& Form get_data
+**&---------------------------------------------------------------------*
+**& text
+**&---------------------------------------------------------------------*
+**& -->  p1        text
+**& <--  p2        text
+**&---------------------------------------------------------------------*
+*FORM get_data USING VALUE(p_v_matnr) TYPE makt-matnr
+*                    VALUE(p_v_spras) TYPE makt-spras
+*             CHANGING p_v_maktx TYPE makt-maktx.
+*
+*  select single maktx from makt into p_v_maktx where matnr eq p_v_matnr and spras eq p_v_spras.
+*
+*ENDFORM.
+
+
+
+DATA : v_matnr type makt-matnr,
+       v_spras type makt-spras,
+       v_maktx type makt-maktx.
+v_matnr = '000000000000000056'.
+v_spras = 'E'.
+PERFORM get_data USING v_matnr v_spras CHANGING v_maktx.
+WRITE v_maktx.
+*&---------------------------------------------------------------------*
+*& Form get_data
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_data USING VALUE(p_v_matnr) TYPE makt-matnr
+                    VALUE(p_v_spras) TYPE makt-spras
+             CHANGING VALUE(p_v_maktx) TYPE makt-maktx.
+
+  select single maktx from makt into p_v_maktx where matnr eq p_v_matnr and spras eq p_v_spras.
+
+ENDFORM.
