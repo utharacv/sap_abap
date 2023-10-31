@@ -1,0 +1,23 @@
+FUNCTION ZUTH_FM_WRITE.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(IT_HEADER_DETAILS) TYPE  ZUTH_HEADER_TABLE
+*"----------------------------------------------------------------------
+DATA : wa_header_details LIKE LINE OF it_header_details.
+LOOP at it_header_details INTO wa_header_details.
+
+  AT FIRST.
+    WRITE :/20 'Document Number',
+           40 'Doc Date',
+           61 'Net Val',
+           90 'Sold To Party'.
+    ENDAT.
+
+  WRITE : /20 wa_header_details-vbeln,
+          40 wa_header_details-audat,
+          51 wa_header_details-netwr,
+         90 wa_header_details-name1.
+
+  ENDLOOP.
+ENDFUNCTION.

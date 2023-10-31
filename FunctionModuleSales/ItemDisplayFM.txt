@@ -1,0 +1,32 @@
+FUNCTION ZUTH_FM_WRITE1.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(IT_ITEM_DETAILS) TYPE  ZUTH_ITEM_TABLE
+*"----------------------------------------------------------------------
+DATA : wa_item_details LIKE LINE OF it_item_details.
+LOOP AT it_item_details INTO wa_item_details.
+  AT FIRST.
+  WRITE :/ 'Item',
+       20 'Material',
+       35 'ItemDesc',
+60 'Order Qty' ,
+ 80 'UoM',
+ 100'NetVal'.
+  ENDAT.
+
+   WRITE : /
+             wa_item_details-posnr,
+            20 wa_item_details-pstyv,
+            35  wa_item_details-arktx,
+            50 wa_item_details-kwmeng,
+            80 wa_item_details-msehl,
+            90 wa_item_details-netwr.
+  ENDLOOP.
+
+
+
+
+
+
+ENDFUNCTION.

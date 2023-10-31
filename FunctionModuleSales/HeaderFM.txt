@@ -1,0 +1,26 @@
+FUNCTION ZUTH_HEADER_FM.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(IM_VBELN) TYPE  ZUTH_RANGE_TABLE
+*"  EXPORTING
+*"     REFERENCE(E_HEADER) TYPE  ZUTH_HEADER_TABLE
+*"----------------------------------------------------------------------
+DATA : it_vbak TYPE  zuth_t_vbak,
+         wa_vbak LIKE LINE OF it_vbak.
+  DATA : it_header TYPE ZUTH_HEADER_TABLE,
+         wa_header LIKE LINE OF it_header.
+
+  DATA : it_kna1 TYPE zuth_t_kna1,
+         wa_kna1 LIKE LINE OF it_kna1.
+  SELECT vbeln audat netwr kunnr FROM vbak INTO TABLE it_vbak WHERE vbeln IN im_vbeln.
+  SELECT kunnr name1 FROM kna1 INTO TABLE it_kna1 FOR ALL ENTRIES IN it_vbak WHERE kunnr EQ it_vbak-kunnr.
+  LOOP AT it_vbak INTO wa_vbak.
+    READ TABLE it_kna1 INTO wa_kna1 WITH KEY kunnr = wa_vbak-kunnr.
+    MOVE-CORRESPONDING wa_vbak TO wa_header.
+    MOVE-CORRESPONDING wa_kna1 TO wa_header.
+    APPEND wa_header TO e_header.
+    CLEAR wa_header.
+ ENDLOOP.
+
+ENDFUNCTION.

@@ -1,0 +1,46 @@
+REPORT ZUTH_FM_SALES.
+DATA : it_vbak TYPE zuth_t_vbak,
+      wa_vbak LIKE LINE OF it_vbak,
+      it_item TYPE zuth_item_table,
+      it_header TYPE zuth_header_table.
+
+
+      SELECT-OPTIONS s_num FOR wa_vbak-vbeln.
+ START-OF-SELECTION.
+CALL FUNCTION 'ZUTH_HEADER_FM'
+  EXPORTING
+    im_vbeln       = s_num[]
+ IMPORTING
+   E_HEADER       = it_header
+          .
+
+
+END-OF-SELECTION.
+CALL FUNCTION 'ZUTH_FM_WRITE'
+  EXPORTING
+    it_header_details       = it_header
+
+          .
+AT LINE-SELECTION.
+
+DATA : fnam(20),fval(50).
+DATA v_vbeln TYPE vbap-vbeln.
+GET CURSOR FIELD fnam VALUE fval.
+
+CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+  EXPORTING
+    input        = fval
+ IMPORTING
+   OUTPUT        = v_vbeln.
+CLEAR it_item.
+CALL FUNCTION 'ZUTH_ITEM_FM'
+  EXPORTING
+    im_v_vbeln       = v_vbeln
+ IMPORTING
+   E_ITEM           = it_item
+          .
+CALL FUNCTION 'ZUTH_FM_WRITE1'
+  EXPORTING
+    it_item_details       = it_item
+
+          .

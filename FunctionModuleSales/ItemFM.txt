@@ -1,0 +1,29 @@
+FUNCTION ZUTH_ITEM_FM.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(IM_V_VBELN) TYPE  VBAK-VBELN
+*"  EXPORTING
+*"     REFERENCE(E_ITEM) TYPE  ZUTH_ITEM_TABLE
+*"----------------------------------------------------------------------
+
+DATA : it_vbap TYPE  zuth_t_vbap,
+        wa_vbap LIKE LINE OF it_vbap.
+
+  DATA : it_t006a TYPE  zuth_t_t006a,
+        wa_t006a LIKE LINE OF it_t006a.
+  DATA : it_item TYPE zuth_item_table,
+        wa_item LIKE LINE OF it_item.
+  SELECT vbeln posnr pstyv arktx kwmeng zieme netwr from vbap into table it_vbap where vbeln eq im_v_vbeln.
+SELECT msehi msehl from t006a into table it_t006a FOR ALL ENTRIES IN it_vbap where msehi eq it_vbap-zieme and spras eq sy-langu.
+  LOOP at it_vbap into wa_vbap.
+    READ TABLE it_t006a into wa_t006a with key msehi = wa_vbap-zieme.
+MOVE-CORRESPONDING wa_vbap TO wa_item.
+MOVE-CORRESPONDING wa_t006a TO wa_item.
+APPEND wa_item TO e_item.
+CLEAR wa_item.
+ENDLOOP.
+
+
+
+ENDFUNCTION.
