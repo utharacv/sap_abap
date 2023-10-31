@@ -1,0 +1,113 @@
+*&---------------------------------------------------------------------*
+*& Report ZUTH_ALV_REPORT
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT ZUTH_ALV_REPORT.
+DATA : it_makt TYPE STANDARD TABLE OF makt.
+DATA : it_fcat TYPE SLIS_T_FIELDCAT_ALV,
+       WA_FCAT LIKE LINE OF IT_FCAT.
+DATA v_matnr TYPE makt-matnr.
+SELECT-OPTIONS s_matnr for v_matnr.
+
+START-OF-SELECTION.
+PERFORM get_data.
+
+end-of-SELECTION.
+PERFORM display_alv_output.
+
+
+*&---------------------------------------------------------------------*
+*& Form display_alv_output
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+
+*&---------------------------------------------------------------------*
+*& Form get_data
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+
+
+FORM display_alv_output .
+
+
+  wa_fcat-col_pos = 1.
+  wa_fcat-fieldname ='MATNR'.
+  wa_fcat-tabname = 'IT_MAKT'.
+  wa_fcat-seltext_m = 'Material Number'.
+  wa_fcat-outputlen = 20.
+  APPEND wa_fcat TO it_fcat.
+
+  wa_fcat-col_pos = 2.
+  wa_fcat-fieldname ='SPRAS'.
+  wa_fcat-tabname = 'IT_MAKT'.
+  wa_fcat-seltext_m = 'Language'.
+  wa_fcat-outputlen = 10.
+  APPEND wa_fcat TO it_fcat.
+
+  wa_fcat-col_pos = 3.
+  wa_fcat-fieldname ='maktx'.
+  wa_fcat-tabname = 'IT_MAKT'.
+  wa_fcat-seltext_m = 'Material Description'.
+  wa_fcat-outputlen = 20.
+  APPEND wa_fcat TO it_fcat.
+
+
+
+CALL FUNCTION 'REUSE_ALV_LIST_DISPLAY'
+ EXPORTING
+*   I_INTERFACE_CHECK              = ' '
+*   I_BYPASSING_BUFFER             =
+*   I_BUFFER_ACTIVE                = ' '
+*   I_CALLBACK_PROGRAM             = ' '
+*   I_CALLBACK_PF_STATUS_SET       = ' '
+*   I_CALLBACK_USER_COMMAND        = ' '
+*   I_STRUCTURE_NAME               = 'MAKT'
+*   IS_LAYOUT                      =
+   IT_FIELDCAT                    = it_fcat
+*   IT_EXCLUDING                   =
+*   IT_SPECIAL_GROUPS              =
+*   IT_SORT                        =
+*   IT_FILTER                      =
+*   IS_SEL_HIDE                    =
+*   I_DEFAULT                      = 'X'
+*   I_SAVE                         = ' '
+*   IS_VARIANT                     =
+*   IT_EVENTS                      =
+*   IT_EVENT_EXIT                  =
+*   IS_PRINT                       =
+*   IS_REPREP_ID                   =
+*   I_SCREEN_START_COLUMN          = 0
+*   I_SCREEN_START_LINE            = 0
+*   I_SCREEN_END_COLUMN            = 0
+*   I_SCREEN_END_LINE              = 0
+*   IR_SALV_LIST_ADAPTER           =
+*   IT_EXCEPT_QINFO                =
+*   I_SUPPRESS_EMPTY_DATA          = ABAP_FALSE
+*   IO_SALV_ADAPTER                =
+* IMPORTING
+*   E_EXIT_CAUSED_BY_CALLER        =
+*   ES_EXIT_CAUSED_BY_USER         =
+  TABLES
+    t_outtab                       = it_makt
+ EXCEPTIONS
+   PROGRAM_ERROR                  = 1
+   OTHERS                         = 2
+          .
+IF sy-subrc <> 0.
+* Implement suitable error handling here
+ENDIF.
+
+ENDFORM.
+
+FORM get_data .
+SELECT * FROM MAKT INTO TABLE IT_MAKT WHERE MATNR IN S_MATNR.
+ENDFORM.
