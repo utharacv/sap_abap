@@ -1,0 +1,9 @@
+REPORT ZUTH_OOP_INHERITANCE1.
+data : o_super TYPE REF TO zcl_uth_super,
+      o_sub TYPE REF TO zcl_uth_sub.
+
+create object : o_super, o_sub.
+
+o_super->get_mileage( ).
+o_sub->get_mileage( ).
+o_sub->get_seats( ).

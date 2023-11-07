@@ -1,0 +1,13 @@
+REPORT ZUTH_OOP_INHERITANCE.
+
+data : o_bus TYPE REF TO ZCL_UTH_BUS.
+DATA o_truck TYPE REF TO ZCL_UTH_truck.
+DATA o_acc TYPE REF TO ZCL_UTH_ACCOUNT.
+CREATE OBJECT : o_acc, o_bus, o_truck.
+
+
+o_acc->calculate_fuel_cost( ovehicle = o_truck ).
+o_acc->calculate_fuel_cost( ovehicle = o_bus ).
+
+
+write 'end'.
