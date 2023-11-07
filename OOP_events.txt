@@ -1,0 +1,24 @@
+REPORT ZUTH_OOP_EVENTS.
+
+CLASS lcl_event_handler DEFINITION.
+  PUBLIC SECTION.
+  METHODS catch_double_click FOR EVENT RAISE_DOUBLE_CLICK OF ZCL_UTH_EVENTS.
+ENDCLASS.
+CLASS lcl_event_handler IMPLEMENTATION.
+
+  METHOD catch_double_click.
+    CALL TRANSACTION 'MM03'.
+  ENDMETHOD.
+ENDCLASS.
+
+DATA o_emp TYPE REF TO ZCL_uth_EVENTS.
+DATA o_events TYPE REF TO lcl_event_handler.
+START-OF-SELECTION.
+
+CREATE OBJECT o_emp.
+CREATE OBJECT o_events.
+
+SET HANDLER o_events->CATCH_double_click FOR o_emp.
+o_emp->double_click( ).
+
+write 'end'.
